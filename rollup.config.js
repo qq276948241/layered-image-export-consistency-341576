@@ -1,7 +1,4 @@
-import buble from 'rollup-plugin-buble';
-import camelCase from 'camelcase';
-
-const pkg = require('./package.json');
+import buble from '@rollup/plugin-buble';
 
 export default {
 	input: 'src/index.js',
@@ -10,13 +7,14 @@ export default {
 	],
 	output: [
 		{
-			file: pkg.main,
+			file: 'dist/index.cjs',
 			format: 'umd',
-			name: camelCase(pkg.name),
+			name: 'mergeImages',
+			exports: 'default',
 			sourcemap: true
 		},
 		{
-			file: pkg.module,
+			file: 'dist/index.mjs',
 			format: 'es',
 			sourcemap: true
 		}

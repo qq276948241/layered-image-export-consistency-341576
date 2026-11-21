@@ -2,8 +2,15 @@
   "name": "merge-images",
   "version": "2.0.0",
   "description": "Easily compose images together without messing around with canvas",
-  "main": "dist/index.umd.js",
-  "module": "dist/index.es2015.js",
+  "type": "module",
+  "main": "dist/index.cjs",
+  "module": "dist/index.mjs",
+  "exports": {
+    ".": {
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs"
+    }
+  },
   "files": [
     "dist"
   ],
@@ -11,15 +18,18 @@
     "prebuild": "rm -rf dist",
     "build": "rollup -c",
     "pretest": "npm run build",
-    "test": "nyc ava",
-    "coverage": "nyc report --reporter=text-lcov | coveralls",
-    "prelint": "npm run build",
-    "lint": "xo",
-    "prepublish": "npm run build"
+    "test": "ava",
+    "coverage": "c8 ava",
+    "lint": "eslint .",
+    "prepublishOnly": "npm run build"
   },
-  "xo": {
-    "env": "browser",
-    "extends": "xo-lukechilds"
+  "ava": {
+    "files": [
+      "test/*.test.js"
+    ]
+  },
+  "engines": {
+    "node": ">=18"
   },
   "repository": {
     "type": "git",
@@ -41,16 +51,13 @@
   "homepage": "https://github.com/lukechilds/merge-images",
   "dependencies": {},
   "devDependencies": {
-    "ava": "^0.25.0",
-    "camelcase": "^5.0.0",
-    "canvas": "^2.6.1",
-    "coveralls": "^3.0.0",
-    "datauri": "^1.0.5",
-    "eslint-config-xo-lukechilds": "^1.0.0",
-    "nyc": "^11.0.2",
-    "pify": "^3.0.0",
-    "rollup": "^0.59.0",
-    "rollup-plugin-buble": "^0.19.2",
-    "xo": "^0.18.2"
+    "@eslint/js": "^10.0.0",
+    "@rollup/plugin-buble": "^1.0.3",
+    "ava": "^8.4.0",
+    "c8": "^10.0.0",
+    "canvas": "^3.2.3",
+    "eslint": "^10.0.0",
+    "globals": "^16.0.0",
+    "rollup": "^4.68.8"
   }
 }
